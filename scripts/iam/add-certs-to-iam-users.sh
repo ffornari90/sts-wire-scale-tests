@@ -33,7 +33,7 @@ done
 
 for index_k in "${!ids[@]}"
 do
-  cert=$(awk '{printf "%s\\n", $0}' "${ROOTDIR}/scripts/sts-wire/conf/certs/client${usernames[$index_k]}/public.crt")
+  cert=$(awk '{printf "%s\\n", $0}' "${ROOTDIR}/scripts/sts-wire/conf/certs/${usernames[$index_k]}/public.crt")
   cat > payload.json <<EOF
 {
   "schemas": [

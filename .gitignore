@@ -4,3 +4,4 @@ client.json
 client*/*
 configs/*
 payload.json
+cacerts/*

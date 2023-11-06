@@ -1,0 +1,5 @@
+config*.yml
+certs/*
+client.json
+client*/*
+configs/*

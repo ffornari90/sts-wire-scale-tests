@@ -3,3 +3,4 @@ certs/*
 client.json
 client*/*
 configs/*
+payload.json

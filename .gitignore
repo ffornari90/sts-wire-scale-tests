@@ -1,7 +1,7 @@
-config*.yml
-certs/*
+*/config*.yml
+*/certs/*
 client.json
-client*/*
+*/client*/*
 configs/*
 payload.json
-cacerts/*
+*/cacerts/*

@@ -5,3 +5,6 @@ client*/*
 configs/*
 payload.json
 cacerts/*
+*.key
+*.crt
+*.pem

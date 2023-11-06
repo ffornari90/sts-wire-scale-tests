@@ -19,7 +19,7 @@ This repo includes scripts and configuration files to perform sts-wire scalabili
 
 ## Requirements 
 
-- [ ] Py script for executing tests with FIO + baltig.infn.it:4567/fornari/sts-wire-scale-tests/sts-wire:rados (docker image for preparing env)
+- [ ] Py script for executing tests with FIO + ffornari/sts-wire:rados (docker image for preparing env)
 - [ ] Prepare gitLab CI/CD for execution and monitoring 
     - [ ] Create ssh key and add to client nodes
 - [ ] Collect metrics and display visualization

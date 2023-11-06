@@ -1,9 +1,10 @@
 #!/bin/bash
 ROOTDIR=$(git rev-parse --show-toplevel)
-if [[ $# -eq 0 ]] ; then
-    echo 'ERROR: You must provide a number of clients.'
+if ! [[ $# -eq 2 ]] ; then
+    echo 'ERROR: You must provide a number of clients and an issuer URL.'
     exit 1
 fi
+IAM_URL=$2
 for i in $(seq 1 $1)
 do
 mkdir -p "$ROOTDIR/scripts/sts-wire/conf/client$i"
@@ -26,4 +27,7 @@ echo '{
   ]
 }' | \
 tee "$ROOTDIR/scripts/sts-wire/conf/client$i/client-req.json"
+http $IAM_URL/iam/api/client-registration \
+ < "$ROOTDIR/scripts/sts-wire/conf/client$i/client-req.json" \
+ > "$ROOTDIR/scripts/sts-wire/conf/client$i/client.json"
 done

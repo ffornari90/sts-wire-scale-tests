@@ -7,18 +7,20 @@ fi
 OIDC_CLIENT_INDEX=$1
 IAM_URL=$2
 AUDIENCE=$3
-CLIENT_ID=$(cat $ROOTDIR/scripts/sts-wire/conf/client$OIDC_CLIENT_INDEX/client.json | jq -r '.client_id')
-CLIENT_SECRET=$(cat $ROOTDIR/scripts/sts-wire/conf/client$OIDC_CLIENT_INDEX/client.json | jq -r '.client_secret')
+CLIENT_PATH="$ROOTDIR/scripts/sts-wire/conf/client$OIDC_CLIENT_INDEX/client.json"
+CLIENT_ID=$(cat $CLIENT_PATH | jq -r '.client_id')
+CLIENT_SECRET=$(cat $CLIENT_PATH | jq -r '.client_secret')
 IAM_FQDN=$(echo $IAM_URL | awk -F 'https://' '{print $2}')
 IAM_CLIENT_SCOPES=${IAM_CLIENT_SCOPES:-"openid profile"}
 IAM_TOKEN_ENDPOINT="https://${IAM_FQDN}/token"
 IAM_AUTHORIZATION_ENDPOINT="https://${IAM_FQDN}/authorize"
 IAM_DASHBOARD_ENDPOINT="https://${IAM_FQDN}/dashboard"
-REDIRECT_URI=$(cat $ROOTDIR/scripts/sts-wire/conf/client$OIDC_CLIENT_INDEX/client.json | jq -r '.redirect_uris[0]')
+REDIRECT_URI=$(cat $CLIENT_PATH | jq -r '.redirect_uris[0]')
 X509_USER_CERT="${ROOTDIR}/scripts/sts-wire/conf/certs/client$1/public.crt"
 X509_USER_KEY="${ROOTDIR}/scripts/sts-wire/conf/certs/client$1/private.key"
 AUTHORIZATION_CODE=$($ROOTDIR/scripts/iam/run_phantomjs.sh \
-$X509_USER_CERT $X509_USER_KEY $IAM_FQDN | awk -F'?' '{print $2}' | tr -d '\r')
+$X509_USER_CERT $X509_USER_KEY $IAM_FQDN $CLIENT_PATH \
+| awk -F'?' '{print $2}' | tr -d '\r')
 
 response=$(mktemp)
 

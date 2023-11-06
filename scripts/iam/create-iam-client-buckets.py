@@ -11,7 +11,7 @@ from urllib.request import build_opener, Request, ProxyHandler, HTTPSHandler
 context=ssl.create_default_context(cafile=certifi.where())
 https_handler = HTTPSHandler(context=context)
 
-boto3.set_stream_logger(name='botocore')
+#boto3.set_stream_logger(name='botocore')
 
 if len(sys.argv) < 2:
     print("No arguments provided.")
@@ -40,7 +40,7 @@ region = 'default'
 
 for i in index:
     client = 'client%s' % i
-    process = myfullpath + '/get-access-token.sh ' + i + ' ' + iam_url + ' ' + audience
+    process = myfullpath + '/get-access-token.sh ' + str(i) + ' ' + iam_url + ' ' + audience
     token = subprocess.check_output(('sh', '-c', process)).strip().decode('utf-8')
     bucket_name = client
 

@@ -5,4 +5,4 @@ if ! [[ $# -eq 2 ]] ; then
 fi
 OIDC_ADMIN_CLIENT=$1
 IAM_URL=$2
-oidc-gen --scope-all --confirm-default --iss=$IAM_URL $OIDC_ADMIN_CLIENT
+oidc-gen --scope-all --confirm-default --iss=$IAM_URL $OIDC_ADMIN_CLIENT --flow=device

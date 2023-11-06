@@ -8,7 +8,7 @@ CLIDIR="${ROOTDIR}/scripts/sts-wire/conf/client$1"
 CONFILE="${ROOTDIR}/scripts/sts-wire/conf/configs/config-$1.yml"
 KEYFILE="${ROOTDIR}/scripts/sts-wire/conf/certs/client$1/private.key"
 CRTFILE="${ROOTDIR}/scripts/sts-wire/conf/certs/client$1/public.crt"
-if [ -f "$CLIDIR" ] && [ -f "$CONFILE" ] && [ -f "$KEYFILE" ] && [ -f "$CRTFILE" ]; then
+if [ -d "$CLIDIR" ] && [ -f "$CONFILE" ] && [ -f "$KEYFILE" ] && [ -f "$CRTFILE" ]; then
     docker run --name="sts-wire-client$1" \
            --net=host -d \
            --device /dev/fuse \

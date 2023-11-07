@@ -18,7 +18,7 @@ if [ -d "$CLIDIR" ] && [ -f "$CONFILE" ] && [ -f "$KEYFILE" ] && [ -f "$CRTFILE"
            -v "${KEYFILE}":/home/docker/private.key \
            -v "${CRTFILE}":/home/docker/public.crt \
            -v "${CONFILE}":/home/docker/config.yml \
-           sts-wire:rados \
+           ffornari/sts-wire:rados \
            sh -x -c 'mkdir -p $HOME/rgw /tmp/rclone && \
            AUDIENCE=$(cat $HOME/config.yml | grep audience \
            | awk '"'"'{print $2}'"'"') && \

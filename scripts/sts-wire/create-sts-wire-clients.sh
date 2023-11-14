@@ -10,7 +10,7 @@ do
 mkdir -p "$ROOTDIR/scripts/sts-wire/conf/client$i"
 echo '{
   "redirect_uris": [
-    "https://rgw.90.147.174.123.myip.cloud.infn.it/"
+    "https://rgw.cloud.infn.it/"
   ],
   "client_name": "sts-wire-client'$i'",
   "contacts": [

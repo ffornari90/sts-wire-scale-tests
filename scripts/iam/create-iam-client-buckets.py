@@ -30,10 +30,10 @@ except NameError:
 
 index = np.arange(1, 1 + int(sys.argv[1]), 1)
 
-audience = 'https://wlcg.cern.ch/jwt/v1/any'
-endpoint = 'https://rgw.90.147.174.123.myip.cloud.infn.it'
-iam_host = '131.154.96.40.myip.cloud.infn.it'
-role_name = 'S3AccessIAMDouble'
+audience = 'object'
+endpoint = 'https://rgw.cloud.infn.it'
+iam_host = 'iam.cloud.infn.it'
+role_name = 'IAMaccess'
 iam_url = 'https://' + iam_host + '/'
 role_arn = 'arn:aws:iam:::role/' + role_name
 region = 'default'

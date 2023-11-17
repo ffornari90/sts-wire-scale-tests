@@ -8,7 +8,7 @@ mkdir -p $ROOTDIR/scripts/sts-wire/conf/configs
 for i in $(seq 1 $1)
 do
 echo '---
-IAM_Server: https://iam.cloud.infn.it
+IAM_Server: https://iam-test.cloud.infn.it
 instance_name: myRGW
 s3_endpoint: https://rgw.cloud.infn.it
 role_name: IAMaccess

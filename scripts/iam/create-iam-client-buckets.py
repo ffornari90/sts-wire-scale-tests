@@ -32,7 +32,7 @@ index = np.arange(1, 1 + int(sys.argv[1]), 1)
 
 audience = 'object'
 endpoint = 'https://rgw.cloud.infn.it'
-iam_host = 'iam.cloud.infn.it'
+iam_host = 'iam-test.cloud.infn.it'
 role_name = 'IAMaccess'
 iam_url = 'https://' + iam_host + '/'
 role_arn = 'arn:aws:iam:::role/' + role_name

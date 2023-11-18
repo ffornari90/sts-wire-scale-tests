@@ -11,7 +11,7 @@ echo '---
 IAM_Server: https://iam-test.cloud.infn.it
 instance_name: myRGW
 s3_endpoint: https://rgw.cloud.infn.it
-role_name: IAMaccess
+role_name: IAMaccess-test
 audience: object
 rclone_remote_path: /client'$i'
 local_mount_point: ./rgw

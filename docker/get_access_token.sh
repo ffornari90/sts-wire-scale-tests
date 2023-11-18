@@ -10,42 +10,38 @@ IAM_DASHBOARD_ENDPOINT="https://${IAM_FQDN}/dashboard"
 REDIRECT_URI=$(cat $CLIENT_PATH | jq -r '.redirect_uris[0]')
 X509_USER_CERT="$HOME/public.crt"
 X509_USER_KEY="$HOME/private.key"
-AUTHORIZATION_CODE=$(./run_phantomjs.sh $X509_USER_CERT $X509_USER_KEY $IAM_FQDN \
-| awk -F'?' '{print $2}' | tr -d '\r')
 
-response=$(mktemp)
+while true; do
+    AUTHORIZATION_CODE=$(./run_phantomjs.sh \
+    $X509_USER_CERT $X509_USER_KEY $IAM_FQDN \
+    | awk -F'?' '{print $2}' | tr -d '\r')
 
-curl -s -L \
-    --user ${CLIENT_ID}:${CLIENT_SECRET} \
-    -d grant_type=authorization_code \
-    -d "scope=${IAM_CLIENT_SCOPES}" \
-    -d "${AUTHORIZATION_CODE}" \
-    -d "redirect_uri=${REDIRECT_URI}" \
-    -d "audience=${AUDIENCE}" \
-    ${IAM_TOKEN_ENDPOINT} 2>&1 > ${response}
+    response=$(mktemp)
 
-if [ $? -ne 0 ]; then
-  echo "Error contacting IAM"
-  cat ${response}
-  exit 1
-fi
+    curl -s -L \
+        --user ${CLIENT_ID}:${CLIENT_SECRET} \
+        -d grant_type=authorization_code \
+        -d "scope=${IAM_CLIENT_SCOPES}" \
+        -d "${AUTHORIZATION_CODE}" \
+        -d "redirect_uri=${REDIRECT_URI}" \
+        -d "audience=${AUDIENCE}" \
+        ${IAM_TOKEN_ENDPOINT} 2>&1 > ${response}
 
-error=$(jq -r .error ${response})
-error_description=$(jq -r .error_description ${response})
+    if [ $? -eq 0 ]; then
+        error=$(jq -r .error ${response})
+        error_description=$(jq -r .error_description ${response})
 
-if [ "${error}" != "null" ]; then
-  echo "IAM returned the following error:"
-  echo
-  echo ${error} " " ${error_description}
-  echo
-fi
+        if [ "${error}" == "null" ]; then
+            access_token=$(jq -r .access_token ${response})
+            refresh_token=$(jq -r .refresh_token ${response})
+            scope=$(jq -r .scope ${response})
+            expires_in=$(jq -r .expires_in ${response})
 
-access_token=$(jq -r .access_token ${response})
-refresh_token=$(jq -r .refresh_token ${response})
-scope=$(jq -r .scope ${response})
-expires_in=$(jq -r .expires_in ${response})
-
-export ACCESS_TOKEN=${access_token}
-export REFRESH_TOKEN=${refresh_token}
-export IAM_CLIENT_ID=${CLIENT_ID}
-export IAM_CLIENT_SECRET=${CLIENT_SECRET}
+            export ACCESS_TOKEN=${access_token}
+            export REFRESH_TOKEN=${refresh_token}
+            export IAM_CLIENT_ID=${CLIENT_ID}
+            export IAM_CLIENT_SECRET=${CLIENT_SECRET}
+            break
+        fi
+    fi
+done

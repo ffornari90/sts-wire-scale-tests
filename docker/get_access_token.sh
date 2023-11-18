@@ -31,7 +31,7 @@ while true; do
         error=$(jq -r .error ${response})
         error_description=$(jq -r .error_description ${response})
 
-        if [ "${error}" == "null" ]; then
+        if [ "${error}" = "null" ] || [ -z "${error}" ]; then
             access_token=$(jq -r .access_token ${response})
             refresh_token=$(jq -r .refresh_token ${response})
             scope=$(jq -r .scope ${response})

@@ -1,5 +1,5 @@
-#!/bin/bash
-if [[ $# -eq 0 ]] || [[$# -eq 1]] || [[$# -eq 2]] ; then
+#!/bin/bash -x
+if [[ $# -eq 3 ]] ; then
     echo 'ERROR: You must provide the correct number of parameters (client number, file size and block size in this order).'
     exit 0
 fi

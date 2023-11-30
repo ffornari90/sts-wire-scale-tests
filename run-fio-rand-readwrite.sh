@@ -16,7 +16,7 @@ do
   for pid in "${pids[@]}"; do
     wait "$pid"
   done
-  sleep 180
+  sleep 240
   pids=()
   for ((index=0; index != $(($CLI_NUM * 4)); index=$(($index + 4)))); do
     grep read: /sts-wire-scale-tests/fio_output/$1_clients/random/$count/"sts-wire-client"$(($index + 1))"-rand-readwrite.log" | awk '{gsub(/[IOPS=,(MB/s]/," "); print $2, $6}' > /sts-wire-scale-tests/fio_output/$1_clients/random/$count/"sts-wire-client"$(($index + 1))"-rand-read.log" 2>&1

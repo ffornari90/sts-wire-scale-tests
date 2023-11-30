@@ -16,7 +16,7 @@ do
   for pid in "${pids[@]}"; do
     wait "$pid"
   done
-  sleep 180
+  sleep 240
   pids=()
   for ((index=0; index != $(($CLI_NUM * 4)); index=$(($index + 4)))); do
     wassh -f client-hosts -l root 'CLI_INDEX=$(expr '$(($index + 1))' + $CLIENT_X_FACTOR) && docker exec sts-wire-client$CLI_INDEX sh -c "cd /home/docker/rgw && rm -f seqwrite.0.0"' & pids+=($!)
